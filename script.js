@@ -45,13 +45,13 @@ async function flashPattern(){
 function nextRand(){
 	let x = Math.floor((Math.random() * 4 ));
 	r.push(x);
-	document.getElementById("level").innerHTML = r.length;
+	document.getElementById("level").innerHTML = "Level : " + r.length;
+	let score = Math.floor((r.length - 1) * speed);
+	document.getElementById("score").innerHTML = "Score : " + score;
 //	document.getElementById(par).innerHTML = r.toString();
 }
 
 async function noop(){ 
-	let score = Math.floor((r.length - 1) * speed);
-	document.getElementById("score").innerHTML = score;
 	speed += .1
 	lock = true;
 	await sleep(flash + rest * 2)
