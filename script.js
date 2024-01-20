@@ -1,12 +1,23 @@
 const boxs = ["box1","box2","box3","box4"];
 const boxColor = ["red","blue","green","yellow"]
 const boxSound = ["A3.mp3","C3.mp3","E3.mp3","A4.mp3"]
-const sounds = [];
+
+// This was a nice idea, but prevented the same tone from playing back to back (overlapping)
+/* const sounds = [];
 for (let i = 0; i < boxSound.length; i++){
 	let audio = new Audio(boxSound[i]);
 	sounds[i] = audio;
+} */
+let speed = 1;
+if (!localStorage.getItem("speed")){
+	localStorage.setItem("speed",0);
 }
-let speed = 1.35;
+let speedDisplay = 0;
+if(localStorage.getItem("speed")){
+	speedDisplay = localStorage.getItem("speed");
+	speed = speedDisplay / 10 + 1;
+	document.getElementById("speed").innerHTML = "" + speedDisplay;
+}
 let flash = 500 / speed;
 let rest = 250 / speed;
 let lock = true;
@@ -36,9 +47,9 @@ async function flashPattern(){
 	let c = r.length;
 	for( let i = 0; i < c; i++){
 		document.getElementById(boxs[r[i]]).style.backgroundColor = "white";
-//		let audio = new Audio(boxSound[r[i]]);
-//		audio.play();
-		sounds[r[i]].play();
+		let audio = new Audio(boxSound[r[i]]);
+		audio.play();
+//		sounds[r[i]].play(); This won't play the same sound back to back
 		await sleep(flash);
 		document.getElementById(boxs[r[i]]).style.backgroundColor = boxColor[r[i]];
 		await sleep(rest);
@@ -55,7 +66,7 @@ function nextRand(){
 }
 
 async function noop(){ 
-	speed += .1
+
 	lock = true;
 	await sleep(flash + rest * 2)
 	document.body.style.backgroundColor = "grey";
@@ -87,9 +98,9 @@ function clickBox(p){
 }
 async function flashSingle(p){
 	document.getElementById(boxs[p]).style.backgroundColor = "white";
-//	let audio = new Audio(boxSound[p]);
-//	audio.play();
-	sounds[p].play();
+	let audio = new Audio(boxSound[p]);
+	audio.play();
+//	sounds[p].play(); This won't allow overlapping playback of the same sound
 	await sleep(flash);
 	document.getElementById(boxs[p]).style.backgroundColor = boxColor[p];
 	await sleep(rest);
@@ -97,6 +108,7 @@ async function flashSingle(p){
 
 function runGame(){
 	document.getElementById("button").disabled= true;
+	disableButtons(true);
 	noop();
 }
 async function loseTone(){
@@ -116,4 +128,41 @@ async function lose(){
 	r = [];
 	input = [];
 	document.getElementById("button").disabled= false;
+	disableButtons(false);
+}
+
+function speedDown(){
+	if (speedDisplay <= 0){
+		speedDisplay = 0;
+		return;
+	}
+	else{
+		speedDisplay -= 1;
+		speed = speedDisplay / 10 + 1;
+		localStorage.setItem("speed", speedDisplay);
+		flash = 500 / speed;
+		rest = 250 / speed;
+	}
+	document.getElementById("speed").innerHTML = speedDisplay;
+}
+function speedUp(){
+	if (speedDisplay >= 10){
+		speedDisplay = 10;
+		return;
+	}
+	else{
+		speedDisplay += 1;
+		localStorage.setItem("speed", speedDisplay);
+		console.log(localStorage.getItem("speed"));
+		speed = speedDisplay / 10 + 1;
+		flash = 500 / speed;
+		rest = 250 / speed;
+	}
+	document.getElementById("speed").innerHTML = speedDisplay;
+}
+
+function disableButtons(boo){
+	document.getElementById("button").disabled = boo;
+	document.getElementById("speedDown").disabled = boo;
+	document.getElementById("speedUp").disabled = boo;
 }

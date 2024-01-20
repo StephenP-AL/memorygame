@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0038)https://daddywarcrimes.com/memorygame/ -->
+
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	
     	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,6 +23,10 @@
 		    height: 90%;
 		    border: 20px solid #000; 
         	}
+
+			.speedButton {
+			height: 50px;
+			}
 				
 	</style>
 </head>
@@ -40,12 +44,21 @@
         	<div class="box" id="box4" onclick="clickBox(3)" style="background-color: yellow;"></div>
     	</div>
 
-	<script src="script.js"></script>
+	
 	
 	<center>
 		<p id="level" style="font-size:22px;"></p>
 		<p id="score" style="font-size:22px;"></p>
 		<button id="button" onclick="runGame()">Start Game</button>
+		<p></p>
+		<div class = "container">
+			<button class="speedButton" id="speedDown" onclick="speedDown()">Slower</button>
+			<p style="color:transparent;">-----</p>
+			<p id="speed" style="font-size:22px;">   0  </p>
+			<p style="color:transparent;">-----</p>
+			<button class="speedButton" id="speedUp" onclick="speedUp()">Faster</button>
+		</div>
 	</center>
+	<script src="script.js"></script>
 
 </body></html>
