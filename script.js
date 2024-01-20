@@ -17,7 +17,7 @@ if (!localStorage.getItem("speed")){
 }
 let speedDisplay = 0;
 if(localStorage.getItem("speed")){
-	speedDisplay = localStorage.getItem("speed");
+	speedDisplay = Number(localStorage.getItem("speed"));
 	speed = speedDisplay / 10 + 1;
 	document.getElementById("speed").innerHTML = speedDisplay;
 }
