@@ -19,7 +19,7 @@ let speedDisplay = 0;
 if(localStorage.getItem("speed")){
 	speedDisplay = localStorage.getItem("speed");
 	speed = speedDisplay / 10 + 1;
-	document.getElementById("speed").innerHTML = "" + speedDisplay;
+	document.getElementById("speed").innerHTML = speedDisplay;
 }
 let flash = 500 / speed;
 let rest = 250 / speed;
@@ -110,7 +110,6 @@ async function flashSingle(p){
 }
 
 function runGame(){
-	document.getElementById("button").disabled= true;
 	disableButtons(true);
 	noop();
 }
@@ -130,7 +129,6 @@ async function lose(){
 	window.alert("Incorrect sequence.\nFinal score: " + score + '\n' + "High Score: " + localStorage.getItem("highScore"));
 	r = [];
 	input = [];
-	document.getElementById("button").disabled= false;
 	disableButtons(false);
 }
 
@@ -153,10 +151,16 @@ function speedUp(){
 		speedDisplay = 10;
 		return;
 	}
+	else if (speedDisplay <= 0){
+		speedDisplay = 1;
+		localStorage.setItem("speed", speedDisplay);
+		speed = speedDisplay / 10 + 1;
+		flash = 500 / speed;
+		rest = 250 / speed;
+	}
 	else{
 		speedDisplay += 1;
 		localStorage.setItem("speed", speedDisplay);
-		console.log(localStorage.getItem("speed"));
 		speed = speedDisplay / 10 + 1;
 		flash = 500 / speed;
 		rest = 250 / speed;
