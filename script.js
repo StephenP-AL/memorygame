@@ -1,3 +1,6 @@
+// Copyright (c) 2024 
+// Licensed under GPL Version 2	
+
 const boxs = ["box1","box2","box3","box4"];
 const boxColor = ["red","blue","green","yellow"]
 const boxSound = ["A3.mp3","C3.mp3","E3.mp3","A4.mp3"]
