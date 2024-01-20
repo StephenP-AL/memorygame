@@ -10,6 +10,9 @@ let speed = 1.35;
 let flash = 500 / speed;
 let rest = 250 / speed;
 let lock = true;
+if (!localStorage.getItem("highScore")){
+	localStorage.setItem("highScore",0);
+}
 
 let r = [];
 let input = [];
@@ -72,7 +75,7 @@ function clickBox(p){
 	input.push(p);
 	let compare = input.toString() == r.toSpliced(input.length).toString();
 	console.log(input.toString() + "-" + r.toSpliced(input.length).toString() + " : " + compare);
-	console.log(compare);
+	
 //	document.getElementById("input").innerHTML = input.toString();
 	flashSingle(p);
 	if (!compare){
@@ -104,9 +107,12 @@ async function loseTone(){
 async function lose(){
 	lock = true;
 	let score = Math.floor((r.length - 1) * speed);
+	if (score > localStorage.getItem("highScore")){
+		localStorage.setItem("highScore", score);
+	}
 	loseTone();
 	await sleep(500);
-	window.alert("Incorrect sequence. Final score: " + score);
+	window.alert("Incorrect sequence.\nFinal score: " + score + '\n' + "High Score: " + localStorage.getItem("highScore"));
 	r = [];
 	input = [];
 	document.getElementById("button").disabled= false;
